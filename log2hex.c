@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <strings.h>
+#include <string.h>
 #include <stdbool.h>
 #include <sys/stat.h>
 
@@ -47,7 +48,8 @@
 // Change as per your application
 //-----------------------------------------------------------
 #define HEXFILEVERSION				CYPD2XXX_HEXFILEVER
-#define DEVICE_ID					CYPD2122_20FNXIT
+//#define DEVICE_ID					CYPD2122_20FNXIT
+#define DEVICE_ID					CYPD2104_20FNXI
 #define DEVICETYPELOCATION			0x132U	
 
 #define OUTPUT_NAME "extracted"
@@ -179,8 +181,8 @@ int main(int argc, char *argv[]) {
 	
 	printf(SPLASHSTRING);
 	
-	if(argc < 3){
-		printf("usage: log2hex <logfile> <bootloader> <device id>\n");
+	if(argc < 2){
+		printf("log2hex v.2.1\nusage: log2hex <logfile> <bootloader> <GoPro device id ie. bacpac=0x1001, garter=0x2>\n  bootloader is optional if bootloader is code protected. device id change is optional too");
 		return -1;
 	}
 	
@@ -232,7 +234,8 @@ int main(int argc, char *argv[]) {
 	len = address+0x10;  // add in the last row
 	
 	// Merge in the bootloader. Trims at startaddr
-	loadboot(argv[2],buff,startaddr);
+	if(argc > 2)
+	    loadboot(argv[2],buff,startaddr);
 	
 	// Merge in application binary
 	memcpy(&buff[startaddr],bread,len-startaddr);

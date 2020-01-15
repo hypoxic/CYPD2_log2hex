@@ -40,4 +40,4 @@ distclean: | clean
 	@rmdir $(BINPATH) $(LIBPATH) >/dev/null 2>/dev/null || true
 
 install: 
-	cp log2hex.exe '../../PD trunk'
+	@:

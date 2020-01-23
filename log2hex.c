@@ -17,7 +17,7 @@
 #define STR(x) STR_HELPER(x)
 
 #define TITLESTRING					"\n\n(log2hex)\nUtility for modifying Cypress EZ-PD(tm) devices using the MiniProg3 via SWD\n"
-#define VERSION						0.3
+#define VERSION						2.2
 #define COMPANY						"HYPOXIC"
 
 #define VERSIONSTRING				"v" STR(VERSION) " " COMPANY
@@ -48,8 +48,8 @@
 // Change as per your application
 //-----------------------------------------------------------
 #define HEXFILEVERSION				CYPD2XXX_HEXFILEVER
-//#define DEVICE_ID					CYPD2122_20FNXIT
-#define DEVICE_ID					CYPD2104_20FNXI
+#define DEVICE_ID					CYPD2122_20FNXIT
+//#define DEVICE_ID					CYPD2104_20FNXI
 #define DEVICETYPELOCATION			0x132U	
 
 #define OUTPUT_NAME "extracted"
@@ -182,10 +182,15 @@ int main(int argc, char *argv[]) {
 	printf(SPLASHSTRING);
 	
 	if(argc < 2){
-		printf("log2hex v.2.1\nusage: log2hex <logfile> <bootloader> <GoPro device id ie. bacpac=0x1001, garter=0x2>\n  bootloader is optional if bootloader is code protected. device id change is optional too");
+		printf("usage: log2hex <logfile> <bootloader> <GoPro device id ie. bacpac=0x1001, garter=0x2>\n  bootloader is optional if bootloader is code protected. device id change is optional too");
 		return -1;
 	}
 	
+	if(DEVICE_ID == CYPD2122_20FNXIT)
+	    printf("built for CYPD2122_20FNXIT");
+	else
+	    printf("built for CYPD2104_20FNXI"); 
+	    
 	if(argc >= 4){
 		devicetype = strtol(argv[3], NULL, 16);
 		devicetype &= 0xFFFF;
